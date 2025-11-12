@@ -1,104 +1,221 @@
-/* CSS Variables for Theme Management */
+/* Theme Variables */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #3b82f6;
+  --success: #06b6d4;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --text: #111827;
+  --muted: #64748b;
+  --border: #e5e7eb;
+  --focus: #2563eb;
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  --surface: #0b0f17;
+  --surface-2: #0f172a;
+  --text: #f3f4f6;
+  --muted: #94a3b8;
+  --border: #1f2937;
+  --focus: #60a5fa;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root, .App {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: linear-gradient(180deg, rgba(59,130,246,0.06), rgba(59,130,246,0)) no-repeat,
+              var(--surface-2);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+}
+
+/* Container */
+.ttt-container {
+  width: 100%;
+  max-width: 460px;
+  margin: 32px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
   position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+/* Header */
+.ttt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ttt-title {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.2px;
+  color: var(--text);
 }
 
 .theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+  background: var(--primary);
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform .12s ease, box-shadow .2s ease, opacity .2s ease;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+}
+.theme-toggle:hover { transform: translateY(-1px); opacity: 0.95; }
+.theme-toggle:active { transform: translateY(0); }
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+/* Status */
+.ttt-status-wrapper { margin: 10px 0 12px; }
+.ttt-status {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  font-weight: 600;
+  text-align: center;
+}
+.ttt-status-win {
+  border-color: rgba(6, 182, 212, 0.45);
+  background: linear-gradient(180deg, rgba(6,182,212,0.10), rgba(6,182,212,0.04));
+  color: var(--text);
+}
+.ttt-status-draw {
+  border-color: rgba(59,130,246,0.4);
+  background: linear-gradient(180deg, rgba(59,130,246,0.10), rgba(59,130,246,0.04));
+  color: var(--text);
 }
 
-.theme-toggle:active {
+/* Board */
+.ttt-board-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 14px 0;
+}
+
+.ttt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(80px, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Square */
+.ttt-square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+  user-select: none;
+  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.06);
+}
+
+.ttt-square:hover {
+  transform: translateY(-1px);
+  background: #ffffff;
+  border-color: rgba(59,130,246,0.35);
+}
+
+.ttt-square:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ttt-square:disabled {
+  cursor: default;
+  opacity: 0.9;
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+.ttt-square-x { color: var(--primary); }
+.ttt-square-o { color: var(--success); }
+
+.ttt-square-win {
+  border-color: rgba(6, 182, 212, 0.8);
+  box-shadow: 0 10px 24px rgba(6, 182, 212, 0.25);
+  background: linear-gradient(180deg, rgba(6,182,212,0.12), rgba(6,182,212,0.04));
+}
+
+/* Actions */
+.ttt-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.ttt-restart-btn {
+  background: linear-gradient(180deg, var(--primary), #2563eb);
+  color: #ffffff;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .25px;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .25s ease, opacity .2s ease;
+  box-shadow: 0 14px 28px rgba(59, 130, 246, 0.35);
+}
+
+.ttt-restart-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.96;
+}
+
+.ttt-restart-btn:active {
+  transform: translateY(0);
+}
+
+.ttt-restart-btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Footer */
+.ttt-footer {
+  margin-top: 14px;
+  text-align: center;
+}
+.ttt-hint {
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .ttt-container { margin: 16px; padding: 16px; }
+  .ttt-grid { gap: 8px; }
+  .ttt-square { font-size: 34px; }
+  .ttt-title { font-size: 20px; }
+  .theme-toggle { padding: 8px 12px; font-size: 13px; }
 }
