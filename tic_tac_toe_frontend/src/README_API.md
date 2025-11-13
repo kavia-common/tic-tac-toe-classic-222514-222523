@@ -1,0 +1,1 @@
+This is a frontend-only application; no backend routes are defined here. WebSocket or HTTP endpoints can be configured via the REACT_APP_* environment variables and consumed by the UI if needed in the future.
