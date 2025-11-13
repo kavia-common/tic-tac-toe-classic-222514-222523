@@ -6,18 +6,23 @@ export default defineConfig(({ mode }) => {
   /**
    * Vite configuration for the Tic Tac Toe React app.
    * - Loads .env variables and exposes those with prefix REACT_APP_ to the client.
-   * - Serves on port 3000, host 0.0.0.0 for preview environments.
+   * - Serves on configurable HOST/PORT via env, defaulting to 0.0.0.0:3000 for preview environments.
    */
   const env = loadEnv(mode, process.cwd(), 'REACT_APP_');
+
+  // Allow container/platform to set HOST/PORT; default to 0.0.0.0:3000
+  const host = process.env.HOST || '0.0.0.0';
+  const port = Number(process.env.PORT || 3000);
+
   return {
     plugins: [react()],
     server: {
-      host: '0.0.0.0',
-      port: 3000
+      host,
+      port
     },
     preview: {
-      host: '0.0.0.0',
-      port: 3000
+      host,
+      port
     },
     envPrefix: 'REACT_APP_',
     define: {
